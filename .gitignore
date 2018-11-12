@@ -373,9 +373,6 @@ ASALocalRun/
 
 #custom
 
-# Config files linking libraries
-!**/*.suo
-
 #Image files
 *.png
 *.jpg
