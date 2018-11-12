@@ -43,7 +43,7 @@
 
 # User-specific files
 *.rsuser
-*.suo
+####*.suo
 *.user
 *.userosscache
 *.sln.docstates
