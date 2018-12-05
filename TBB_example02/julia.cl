@@ -1,7 +1,6 @@
 kernel void julia_kernel(
 	write_only image2d_t outputImage, 
-	const float cReal, 
-	const float cImag, 
+	const float2 C, 
 	const uint MAX_ITERATIONS,
 	const float limit
 	)
@@ -14,14 +13,13 @@ kernel void julia_kernel(
 	int y = get_global_id(1);
 	int size = get_global_size(0); //square image
 	
+	float2 Z = (float2)(-limit + 2.0f * limit * x / size , -limit + 2.0f * limit * y / size);
 
-	float zReal = -limit + 2.0 * limit / size * x;
-	float zImag = -limit + 2.0 * limit / size * y;
 	uint i;
 	for (i = 0; i < MAX_ITERATIONS; i++) {
-		zReal = zReal*zReal - zImag*zImag + cReal;
-		zImag = zReal*zImag*2.0 +cImag;
-		if (zReal*zReal + zImag*zImag > 4.0){
+		Z = (float2)(Z.x*Z.x - Z.y*Z.y + C.x , Z.x*Z.y*2.0f + C.y);
+
+		if (Z.x*Z.x + Z.y*Z.y > 4.0f){
 			break;
 		}
 	}
