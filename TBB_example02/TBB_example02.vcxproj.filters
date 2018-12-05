@@ -18,5 +18,18 @@
     <ClCompile Include="JuliaSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="setup_cl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="setup_cl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="voronoi.cl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
