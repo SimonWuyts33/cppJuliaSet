@@ -28,7 +28,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="voronoi.cl">
+    <None Include="julia.cl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
