@@ -17,14 +17,14 @@ using namespace std;
 
 
 // Helper function to report available platforms and devices and create and return an OpenCL context
-cl_context createContext() {
+cl_context createContext(const char* platform) {
 
 	cl_int				clerr;
 	cl_uint				numPlatforms;
 	cl_platform_id		*platformArray;
 	locale				loc;
 	cl_context			context = nullptr;
-	const				string platformToFind = string("INTEL");
+	const				string platformToFind = string(platform);
 	int					platformIndex = -1;
 
 	try {

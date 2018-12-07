@@ -1,3 +1,4 @@
+
 kernel void julia_kernel(
 	write_only image2d_t outputImage, 
 	const float2 C, 
@@ -28,7 +29,7 @@ kernel void julia_kernel(
 	if (i < MAX_ITERATIONS) { 
 
 		//BGRA
-		uint4 color = (uint4)(i % 5 * 20 + 100, 0, 0, 0);
+		uint4 color = (uint4)(i % 5 * 20 + 100, 0, 0, 0); //BGRA
 		write_imageui(outputImage, (int2)(x, y), color);
 	}
 	//default color == black; else not necesarry

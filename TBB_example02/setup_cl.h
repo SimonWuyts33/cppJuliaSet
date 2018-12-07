@@ -4,7 +4,7 @@
 
 #include <CL\opencl.h>
 
-cl_context createContext();
+cl_context createContext(const char* platform);
 
 cl_device_id getDeviceForContext(cl_context context, int deviceIndex = 0);
 
