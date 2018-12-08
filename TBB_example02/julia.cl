@@ -1,6 +1,6 @@
 
 kernel void julia_kernel(
-	write_only image2d_t outputImage, 
+	global uchar3* outputBuffer, // array of BGR pixels, length of size²
 	const float2 C, 
 	const uint MAX_ITERATIONS,
 	const float limit
@@ -9,10 +9,10 @@ kernel void julia_kernel(
 
 	const sampler_t sampler = CLK_NORMALIZED_COORDS_FALSE | CLK_ADDRESS_CLAMP_TO_EDGE | CLK_FILTER_NEAREST;
 
-	// Get id of element in array
+	// Get id of element in buffer
 	int x = get_global_id(0);
 	int y = get_global_id(1);
-	int size = get_global_size(0); //square image
+	int size = get_global_size(0);
 	
 	float2 Z = (float2)(-limit + 2.0f * limit * x / size , -limit + 2.0f * limit * y / size);
 
@@ -25,12 +25,10 @@ kernel void julia_kernel(
 		}
 	}
 
-	// this if-statement can be avoided by using a color array that contains black too.
+	// this if-statement can be avoided by using a color array that contains black too. 
 	if (i < MAX_ITERATIONS) { 
-
-		//BGRA
-		uint4 color = (uint4)(i % 5 * 20 + 100, 0, 0, 0); //BGRA
-		write_imageui(outputImage, (int2)(x, y), color);
+		uchar3 color = (uchar3)(i % 5 * 20 + 100, 0, 0); //BGRA
+		outputBuffer[y * size + x] = color; //BGR
 	}
-	//default color == black; else not necesarry
+	//default color == black; else unnecesarry
 }
