@@ -1,9 +1,11 @@
 
 kernel void julia_kernel(
-	global uchar3* outputBuffer, // array of BGR pixels, length of size²
+	global uchar* outputBuffer, // array of BGR pixels, length of size²*3 bytes (byte == uchar)
 	const float2 C, 
-	const uint MAX_ITERATIONS,
-	const float limit
+	const uint max_iterations,
+	const float limit,
+	global uchar* colors,
+	const uint colorCount
 	)
 {
 
@@ -17,7 +19,7 @@ kernel void julia_kernel(
 	float2 Z = (float2)(-limit + 2.0f * limit * x / size , -limit + 2.0f * limit * y / size);
 
 	uint i;
-	for (i = 0; i < MAX_ITERATIONS; i++) {
+	for (i = 0; i < max_iterations; i++) {
 		Z = (float2)(Z.x*Z.x - Z.y*Z.y + C.x , Z.x*Z.y*2.0f + C.y);
 
 		if (Z.x*Z.x + Z.y*Z.y > 4.0f){
@@ -26,9 +28,12 @@ kernel void julia_kernel(
 	}
 
 	// this if-statement can be avoided by using a color array that contains black too. 
-	if (i < MAX_ITERATIONS) { 
-		uchar3 color = (uchar3)(i % 5 * 20 + 100, 0, 0); //BGRA
-		outputBuffer[y * size + x] = color; //BGR
+	if (i < max_iterations) { 
+		uint ic =  i % colorCount * 3;
+		i =(y * size + x)*3;
+		outputBuffer[i] = colors[ic]; //B
+		outputBuffer[i+1] = colors[ic+1]; //G
+		outputBuffer[i+2] = colors[ic+2]; //R
 	}
 	//default color == black; else unnecesarry
 }

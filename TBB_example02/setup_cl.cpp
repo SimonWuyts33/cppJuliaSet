@@ -91,13 +91,15 @@ cl_context createContext(const char* platform) {
 
 			for (cl_uint j = 0; j < numDevices; ++j) {
 
-				cl_uint maxComputeUnits, maxWorkItemDim;
+				cl_uint maxComputeUnits, maxWorkItemDim, maxMemAllocSize;
 
 				clGetDeviceInfo(devices[j], CL_DEVICE_MAX_COMPUTE_UNITS, sizeof(cl_uint), &maxComputeUnits, &resultSize);
 				clGetDeviceInfo(devices[j], CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS, sizeof(cl_uint), &maxWorkItemDim, &resultSize);
+				clGetDeviceInfo(devices[j], CL_DEVICE_MAX_MEM_ALLOC_SIZE, sizeof(cl_uint), &maxMemAllocSize, &resultSize);
 
 				cout << "Max compute units for device " << j << " = " << maxComputeUnits << endl;
 				cout << "Max work item dimensions for device " << j << " = " << maxWorkItemDim << endl;
+				cout << "Max memory alloc size for device " << j << " = " << maxMemAllocSize << endl;
 			}
 
 			cout << "// --------------------------\n\n";
